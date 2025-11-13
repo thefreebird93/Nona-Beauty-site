@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -546,7 +544,7 @@ class ProductsManager {
 
         if (productsToShow.length === 0) {
             safeSetHTML(productsGrid, `
-                <div class="no-products" style="grid-column: 1 / -1); text-align: center; padding: 60px 20px;">
+                <div class="no-products" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
                     <i class="fas fa-search" style="font-size: 64px; color: #e2e8f0; margin-bottom: 20px;"></i>
                     <h3 style="color: var(--muted-text); margin-bottom: 10px;">No products found</h3>
                     <p style="color: var(--muted-text); margin-bottom: 20px;">Try adjusting your filters or search terms</p>
@@ -554,7 +552,7 @@ class ProductsManager {
                         Clear All Filters
                     </button>
                 </div>
-            `;
+            `);
         } else {
             safeSetHTML(productsGrid, productsToShow.map(product => 
                 this.createProductCard(product)
@@ -927,4 +925,3 @@ document.addEventListener('DOMContentLoaded', function() {
         document.head.appendChild(productsStyles);
     }
 });
-[file content end]
