@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -395,16 +393,15 @@ class OffersManager {
 
         if (this.filteredOffers.length === 0) {
             safeSetHTML(offersGrid, `
-                <div class="no-offers" style="grid-column: 1 / -1); text-align: center; padding: 60px 20px;">
+                <div class="no-offers" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
                     <i class="fas fa-tag" style="font-size: 64px; color: #e2e8f0; margin-bottom: 20px;"></i>
                     <h3 style="color: var(--muted-text); margin-bottom: 10px;">No offers available</h3>
                     <p style="color: var(--muted-text);">Check back later for new promotions</p>
                 </div>
-            `;
-            return;
+            `);
+        } else {
+            safeSetHTML(offersGrid, this.filteredOffers.map(offer => this.createOfferCard(offer)).join(''));
         }
-
-        safeSetHTML(offersGrid, this.filteredOffers.map(offer => this.createOfferCard(offer)).join(''));
     }
 
     createOfferCard(offer) {
@@ -455,14 +452,13 @@ class OffersManager {
 
         if (activeBundles.length === 0) {
             safeSetHTML(bundlesGrid, `
-                <div class="no-bundles" style="grid-column: 1 / -1); text-align: center; padding: 40px;">
+                <div class="no-bundles" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
                     <p>No bundle deals available at the moment</p>
                 </div>
-            `;
-            return;
+            `);
+        } else {
+            safeSetHTML(bundlesGrid, activeBundles.map(bundle => this.createBundleCard(bundle)).join(''));
         }
-
-        safeSetHTML(bundlesGrid, activeBundles.map(bundle => this.createBundleCard(bundle)).join(''));
     }
 
     createBundleCard(bundle) {
@@ -542,7 +538,7 @@ class OffersManager {
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>${offer.title}</h3>
-                    <button class="close-modal">&times);</button>
+                    <button class="close-modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="offer-details">
@@ -577,7 +573,7 @@ class OffersManager {
                     <button class="btn btn-outline close-modal">Close</button>
                 </div>
             </div>
-        `;
+        `);
 
         document.body.appendChild(modal);
 
@@ -1389,4 +1385,3 @@ document.addEventListener('DOMContentLoaded', function() {
         document.head.appendChild(offersStyles);
     }
 });
-[file content end]
