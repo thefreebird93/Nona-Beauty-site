@@ -11,3 +11,10 @@ function addAdminEmail(email){ const cfg = getConfig(); if(!cfg.adminEmails.incl
 function removeAdminEmail(email){ const cfg = getConfig(); cfg.adminEmails = cfg.adminEmails.filter(e=>e!==email); saveConfig(cfg); }
 function updateSocial(key,val){ const cfg=getConfig(); cfg.socials[key]=val; saveConfig(cfg); }
 function updateEmailjs(creds){ const cfg=getConfig(); cfg.emailjs = Object.assign(cfg.emailjs, creds); saveConfig(cfg); }
+<script>
+  (function() {
+    emailjs.init({
+      publicKey: "i4RKTCVZcPPO5Frho"
+    });
+  })();
+</script>
