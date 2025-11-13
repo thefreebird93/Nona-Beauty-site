@@ -1,0 +1,39 @@
+/* CSS Variables - Centralized */
+:root {
+    /* Colors */
+    --primary-color: #d63384;
+    --secondary-color: #6f42c1;
+    --accent-color: #20c997;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    
+    /* Backgrounds */
+    --light-bg: #f8f9fa;
+    --dark-bg: #343a40;
+    --white: #ffffff;
+    
+    /* Text */
+    --dark-text: #212529;
+    --muted-text: #6c757d;
+    
+    /* Design */
+    --border-radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --transition: all 0.3s ease;
+    
+    /* Spacing */
+    --section-padding: 60px 0;
+    --container-padding: 0 20px;
+}
+
+/* Dark Mode Variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-bg: #1a1a1a;
+        --dark-text: #ffffff;
+        --muted-text: #a0a0a0;
+        --white: #2d2d2d;
+        --shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+}
