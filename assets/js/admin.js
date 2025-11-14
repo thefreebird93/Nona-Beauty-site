@@ -87,19 +87,20 @@ class AdminPanel {
         this.checkAdminAccess();
     }
 
-    checkAdminAccess() {
+checkAdminAccess() {
   const currentUser = safeGet('nonaBeautyUser');
   if (!currentUser || currentUser.role !== 'admin') {
     window.location.href = 'login.html';
-    throw new Error('Unauthorized access'); // أو return false
+    return false;
   }
   return true;
 }
 
-// ثم في init:
 init() {
   if (!this.checkAdminAccess()) return;
-        }
+  
+  this.loadData();
+  this.setupEventListeners();
     }
 
     loadData() {
