@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -18,11 +16,13 @@ function sanitizeAndSet(key, obj){
   try{
     if(obj && typeof obj === 'object'){
       var copy = JSON.parse(JSON.stringify(obj));
-      if(copy.password) delete copy.password;
-      if(copy.token) {
-        // for client-only demo, don't store raw tokens; remove or shorten
-        delete copy.token;
-      }
+      // قائمة شاملة للحقول الحساسة
+      const sensitiveFields = ['password', 'token', 'accessToken', 'refreshToken', 'secret', 'apiKey', 'creditCard', 'cvv'];
+      sensitiveFields.forEach(field => {
+        if(copy[field]) delete copy[field];
+        // حذف من الكائنات المتداخلة أيضاً
+        if(copy.user && copy.user[field]) delete copy.user[field];
+      });
       localStorage.setItem(key, JSON.stringify(copy));
     } else {
       localStorage.setItem(key, JSON.stringify(obj));
@@ -34,18 +34,29 @@ function sanitizeAndSet(key, obj){
 function safeSetHTML(el, html){
   try{
     if(!el) return;
-    // basic sanitize: remove script tags
-    var clean = String(html).replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-    // if el is a selector string, try to resolve it
+    
+    // تنظيف أكثر شمولاً
+    var clean = String(html)
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/on\w+="[^"]*"/g, '')
+      .replace(/on\w+='[^']*'/g, '')
+      .replace(/javascript:/gi, '')
+      .replace(/vbscript:/gi, '');
+    
+    // استخدام textContent بدل innerHTML للأمان
     try{
       if(typeof el === 'string'){
         var resolved = document.querySelector(el);
-        if(resolved) resolved.innerHTML = clean;
+        if(resolved) {
+          resolved.textContent = ''; // تفريغ أولاً
+          resolved.innerHTML = clean;
+        }
         return;
       }
     }catch(e){}
-    // otherwise assume element
+    
     if(el && el.innerHTML !== undefined){
+      el.textContent = ''; // تفريغ أولاً
       el.innerHTML = clean;
     }
   }catch(e){
@@ -77,10 +88,17 @@ class AdminPanel {
     }
 
     checkAdminAccess() {
-        const currentUser = safeGet('nonaBeautyUser');
-        if (!currentUser || currentUser.role !== 'admin') {
-            window.location.href = 'login.html';
-            return;
+  const currentUser = safeGet('nonaBeautyUser');
+  if (!currentUser || currentUser.role !== 'admin') {
+    window.location.href = 'login.html';
+    throw new Error('Unauthorized access'); // أو return false
+  }
+  return true;
+}
+
+// ثم في init:
+init() {
+  if (!this.checkAdminAccess()) return;
         }
     }
 
