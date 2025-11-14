@@ -17,4 +17,4 @@ function updateEmailjs(creds){ const cfg=getConfig(); cfg.emailjs = Object.assig
       publicKey: "i4RKTCVZcPPO5Frho"
     });
   })();
-</script>
+<script>
