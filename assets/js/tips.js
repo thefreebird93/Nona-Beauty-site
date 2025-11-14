@@ -1,5 +1,3 @@
-
-
 /* --- safety helpers inserted automatically ---
    safeGet(key) -> returns parsed JSON from localStorage or null safely
    sanitizeAndSet(key, obj) -> removes sensitive props (password, token) before storing
@@ -388,13 +386,13 @@ class TipsManager {
         const tipsToShow = this.filteredTips.slice(startIndex, endIndex);
 
         if (tipsToShow.length === 0) {
-            safeSetHTML(tipsGrid, `
-                <div class="no-tips" style="grid-column: 1 / -1); text-align: center; padding: 60px 20px;">
-                    <i class="fas fa-newspaper" style="font-size: 64px; color: #e2e8f0; margin-bottom: 20px;"></i>
-                    <h3 style="color: var(--muted-text); margin-bottom: 10px;">No tips found</h3>
-                    <p style="color: var(--muted-text);">Try selecting a different category</p>
-                </div>
-            `;
+safeSetHTML(tipsGrid, `
+  <div class="no-tips" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+    <i class="fas fa-newspaper" style="font-size: 64px; color: #e2e8f0; margin-bottom: 20px;"></i>
+    <h3 style="color: var(--muted-text); margin-bottom: 10px;">No tips found</h3>
+    <p style="color: var(--muted-text);">Try selecting a different category</p>
+  </div>
+`);
         } else {
             safeSetHTML(tipsGrid, tipsToShow.map(tip => this.createTipCard(tip)).join(''));
         }
